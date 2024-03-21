@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">All Document Viewer</string>
+    <string name="all_access">Allow </string>
+    <string name="allow_access_detail">Allow From Unknow Source</string>
+    <string name="open_setting">open</string>
+    <string name="not_now">cancel</string>
+    <string name="open">open</string>
+    <string name="close">close</string>
+</resources>

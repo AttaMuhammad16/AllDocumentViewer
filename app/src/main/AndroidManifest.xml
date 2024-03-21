@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
+    <uses-permission
+        android:name="android.permission.MANAGE_EXTERNAL_STORAGE"
+        tools:ignore="ScopedStorage" />
+    <uses-permission android:name="android.permission.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+    <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
+
+    <application
+        android:name=".utils.App"
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:requestLegacyExternalStorage="true"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.AllDocumentViewer"
+        tools:targetApi="31">
+        <activity
+            android:name=".ui.activities.PrivacyPolicyActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activities.CreateZipFileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activities.barcodescanner.BarCodeScanner"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activities.notes.NotesAddActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activities.notes.NotesViewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activities.WordToPdfActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activities.MergePdfActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activities.ReadOnlinePdfActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activities.AddPdfPasswordActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activities.RecentFilesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activities.PdfToImageActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activities.TextToPdfActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activities.ImageToPdfActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activities.VideoPlayerActivity"
+            android:exported="false"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".ui.activities.GetVideosActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activities.FullImageViewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activities.ShowImagesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activities.GetImagesFolder"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activities.BookMarksActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activities.RARFilesViewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activities.AllFolderFilesViewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activities.AllFoldersActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activities.RTFFileViewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activities.ZipUnZipActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activities.TextFileViewAcitivyt"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activities.SheetsViewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activities.SlidesViewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activities.PDFViewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activities.DocAndDocxViewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activities.UnRarActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activities.UnZipActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SampleActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ui.activities.AllDocumentsViewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activities.SearchDocumentsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activities.MainActivity"
+            android:exported="true"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.easytec.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
+        <provider
+            android:name="androidx.startup.InitializationProvider"
+            android:authorities="${applicationId}.androidx-startup"
+            android:exported="false"
+            tools:node="merge">
+            <meta-data
+                android:name="androidx.work.WorkManagerInitializer"
+                android:value="androidx.startup"
+                tools:node="remove" />
+        </provider>
+    </application>
+
+</manifest>

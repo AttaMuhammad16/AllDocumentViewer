@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+<!--    <color name="widgetsColor">#47878F</color>-->
+<!--    <color name="main_app_color">#056875</color>-->
+
+<!--    <color name="widgetsColor">#147E46</color>-->
+<!--    <color name="main_app_color">#0F532F</color>-->
+
+    <color name="widgetsColor">#4E2365</color>
+    <color name="main_app_color">#300945</color>
+
+    <color name="rippleColor">#858383</color>
+    <color name="hint_edt_color">#A6A5A5</color>
+
+
+    <color name="color1">#E91E63</color>
+    <color name="color2">#00BCD4</color>
+    <color name="color3">#2EC636</color>
+    <color name="color4">#8418EA</color>
+    <color name="color5">#4634DA</color>
+    <color name="color6">#36AEE3</color>
+    <color name="color7">#EA9330</color>
+    <color name="color8">#7FED20</color>
+    <color name="color9">#E86B27</color>
+    <color name="color10">#C1D312</color>
+    <color name="color11">#BC5521</color>
+    <color name="color12">#E4AA1C</color>
+    <color name="color13">#305EF6</color>
+    <color name="color14">#C3A322</color>
+    <color name="color15">#E61B10</color>
+    <color name="color16">#CC7E12</color>
+    <color name="color17">#5AC8FA</color>
+    <color name="color18">#34C759</color>
+    <color name="color19">#1340B6</color>
+
+</resources>
