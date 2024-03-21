@@ -8,10 +8,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="com.easytec" />
-                  <option name="mobileSdkAppId" value="1:396825176682:android:c13191ede37aab573d7813" />
-                  <option name="projectId" value="all-document-viewer-16fd6" />
-                  <option name="projectNumber" value="396825176682" />
+                  <option name="appId" value="PLACEHOLDER" />
+                  <option name="mobileSdkAppId" value="" />
+                  <option name="projectId" value="" />
+                  <option name="projectNumber" value="" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

@@ -1,0 +1,49 @@
+{
+  "project_info": {
+    "project_number": "119212084829",
+    "firebase_url": "https://all-document-viewer-44c35-default-rtdb.firebaseio.com",
+    "project_id": "all-document-viewer-44c35",
+    "storage_bucket": "all-document-viewer-44c35.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:119212084829:android:4856e0fa93d4841ff787b4",
+        "android_client_info": {
+          "package_name": "com.alldocumentviewerapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDnl4pg7ud7kEOw8oW1zFJxUvazgE36DZU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:119212084829:android:4fd1d4441d651d43f787b4",
+        "android_client_info": {
+          "package_name": "com.easytec"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDnl4pg7ud7kEOw8oW1zFJxUvazgE36DZU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

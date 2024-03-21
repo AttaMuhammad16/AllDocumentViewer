@@ -8,11 +8,11 @@ plugins {
 }
 
 android {
-    namespace 'com.easytec'
+    namespace 'com.alldocumentviewerapp'
     compileSdk 34
 
     defaultConfig {
-        applicationId "com.easytec"
+        applicationId "com.alldocumentviewerapp"
         minSdk 26
         targetSdk 34
         versionCode 1
