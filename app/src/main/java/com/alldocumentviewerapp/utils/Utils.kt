@@ -173,7 +173,7 @@ object Utils {
     }
 
     fun showProgressDialog(context: Context, message: String): Dialog {
-        var progressDialog = Dialog(context)
+        val progressDialog = Dialog(context)
         progressDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         progressDialog.setCancelable(false)
 
@@ -192,10 +192,8 @@ object Utils {
 
 
     fun getRTFFiles(): ArrayList<TotalFilesModel> {
-        val downloadsDirectory =
-            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
-        val documentDirectory =
-            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)
+        val downloadsDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+        val documentDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)
 
         val rtfFiles = ArrayList<TotalFilesModel>()
 
@@ -476,7 +474,7 @@ object Utils {
 
     fun shareAppLink(context: Context){
         val appPackageName = "com.alldocumentviewerapp"
-        val playStoreLink = "All Document Viewer From Easy Tech \nhttps://play.google.com/store/apps/details?id=$appPackageName"
+        val playStoreLink = "All Document Viewer From Quantum App Works \nhttps://play.google.com/store/apps/details?id=$appPackageName"
         val intent = Intent(Intent.ACTION_SEND)
         intent.type = "text/plain"
         intent.putExtra(Intent.EXTRA_TEXT, playStoreLink)

@@ -32,5 +32,6 @@ class UnRarActivity : AppCompatActivity() {
         }else{
             Junrar.extract(rarFile, outputDirectory)
         }
+
     }
 }

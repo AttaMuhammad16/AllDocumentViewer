@@ -67,7 +67,8 @@ class MainActivity : AppCompatActivity() {
                 if (if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                         Environment.isExternalStorageManager()
                     } else {
-                        TODO("VERSION.SDK_INT < R")
+                        Toast.makeText(this@MainActivity, "Feature not available on older devices", Toast.LENGTH_LONG).show()
+                        true
                     }
                 ) {
 //                   onResume()
@@ -107,11 +108,6 @@ class MainActivity : AppCompatActivity() {
 
                         R.id.feedback -> {
                             feedBackIntent(this@MainActivity)
-                            return true
-                        }
-
-                        R.id.privacyPolicy -> {
-                            startActivity(Intent(this@MainActivity,PrivacyPolicyActivity::class.java))
                             return true
                         }
 
@@ -182,7 +178,7 @@ class MainActivity : AppCompatActivity() {
                     startForDocumentActivity(RARFilesViewActivity(), "rarFiles", rarList)
                 }
                 R.id.rtf->{
-                    var rtfList = Utils.getRTFFiles()
+                    val rtfList = Utils.getRTFFiles()
                     startForDocumentActivity(RTFFileViewActivity(), "rtfFileList", rtfList)
                 }
                 R.id.folders->{

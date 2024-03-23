@@ -12,7 +12,5 @@ class App:Application() {
     override fun onCreate() {
         super.onCreate()
         FirebaseApp.initializeApp(this)
-        val config = Configuration.Builder().build()
-        WorkManager.initialize(this, config)
     }
 }

@@ -2,5 +2,4 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/shareApp" android:title="Share App"/>
     <item android:id="@+id/feedback" android:title="Feedback"/>
-    <item android:id="@+id/privacyPolicy" android:title="Privacy Policy"/>
 </menu>
