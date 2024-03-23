@@ -10,6 +10,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.alldocumentviewerapp.models.TotalFilesModel
+import com.google.android.gms.tasks.Task
+import com.google.android.gms.tasks.Tasks
 import com.google.firebase.storage.FirebaseStorage
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -45,5 +47,19 @@ class UploadFileViewModel @Inject constructor():ViewModel() {
            pd.visibility = View.GONE
         }
     }
+
+
+    suspend fun deleteImageToFirebaseStorage(url: String){
+        try {
+            val storageRef = storage.getReferenceFromUrl(url)
+            val deleteTask: Task<Void> = storageRef.delete()
+            Tasks.await(deleteTask)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+
+
 
 }

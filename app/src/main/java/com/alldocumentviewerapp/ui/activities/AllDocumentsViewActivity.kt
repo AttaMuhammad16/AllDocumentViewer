@@ -33,6 +33,9 @@ import com.itextpdf.kernel.pdf.PdfReader
 import com.itextpdf.kernel.pdf.ReaderProperties
 import com.itextpdf.text.exceptions.BadPasswordException
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import org.apache.poi.hssf.usermodel.HSSFWorkbook
 import org.apache.poi.ss.usermodel.*
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
@@ -47,6 +50,8 @@ class AllDocumentsViewActivity : AppCompatActivity() {
     var getExtension = ""
     val uploadFileViewModel :UploadFileViewModel by viewModels()
     var filePath=""
+    var urlForReturn=""
+
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -194,7 +199,7 @@ class AllDocumentsViewActivity : AppCompatActivity() {
     }
 
     @SuppressLint("SetJavaScriptEnabled")
-    fun uploadFiles(filePath: String):String{
+    fun uploadFiles(filePath: String):String {
         binding.pd.visibility = View.VISIBLE
         binding.webView.apply {
             visibility = View.VISIBLE
@@ -223,11 +228,12 @@ class AllDocumentsViewActivity : AppCompatActivity() {
                 super.onPageStarted(view, url, favicon)
             }
         }
-        var urlForReturn=""
+        urlForReturn=""
         uploadFileViewModel.liveUrl.observe(this) { url ->
             urlForReturn=url
             binding.webView.loadUrl("https://docs.google.com/gview?embedded=true&url=$url")
         }
+
         return urlForReturn
     }
 
@@ -289,7 +295,16 @@ class AllDocumentsViewActivity : AppCompatActivity() {
                 Toast.makeText(this@AllDocumentsViewActivity, "Enter Password", Toast.LENGTH_SHORT).show()
                 dialog.dismiss()
             }
+        }
+    }
 
+    @OptIn(DelicateCoroutinesApi::class)
+    override fun onBackPressed() {
+        super.onBackPressed()
+        GlobalScope.launch {
+            if (urlForReturn.isNotEmpty()){
+                uploadFileViewModel.deleteImageToFirebaseStorage(urlForReturn)
+            }
         }
     }
 }

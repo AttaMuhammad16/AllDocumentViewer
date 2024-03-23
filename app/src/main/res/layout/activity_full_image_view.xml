@@ -10,7 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/main_app_color"
+        android:background="@color/black"
         tools:context=".ui.activities.FullImageViewActivity">
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolBAR"

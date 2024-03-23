@@ -8,10 +8,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="com.alldocumentviewerapp" />
+                  <option name="mobileSdkAppId" value="1:119212084829:android:4856e0fa93d4841ff787b4" />
+                  <option name="projectId" value="all-document-viewer-44c35" />
+                  <option name="projectNumber" value="119212084829" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

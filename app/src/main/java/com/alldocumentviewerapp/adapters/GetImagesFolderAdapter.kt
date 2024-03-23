@@ -30,14 +30,14 @@ class GetImagesFolderAdapter(var list: ArrayList<ImageFolder>, var context: Cont
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        var data=list[position]
+        val data=list[position]
         holder.date.visibility= View.GONE
         holder.drop_down_arrow.visibility= View.GONE
         holder.folderName.text=data.folderName
         holder.fileIcon.setImageResource(R.drawable.folder)
         holder.fileSize.text="${data.imageCount} images"
         holder.itemView.setOnClickListener {
-            var intent=Intent(context,ShowImagesActivity::class.java)
+            val intent=Intent(context,ShowImagesActivity::class.java)
             intent.putExtra("videoTitle",data.folderName)
             context.startActivity(intent)
         }

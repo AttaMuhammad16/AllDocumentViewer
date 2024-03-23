@@ -25,10 +25,10 @@ class ShowImagesAdapter(var list: ArrayList<Uri>, var context: Context) : Recycl
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        var data=list[position]
+        val data=list[position]
         Glide.with(context).load(data).placeholder(R.drawable.img).into(holder.images);
         holder.itemView.setOnClickListener {
-            var intent=Intent(context,FullImageViewActivity::class.java)
+            val intent=Intent(context,FullImageViewActivity::class.java)
             intent.putExtra("imgUri",data.toString())
             context.startActivity(intent)
         }

@@ -22,8 +22,8 @@ class FullImageViewActivity : AppCompatActivity() {
             }
         }
 
-        var bundleUri=intent.getStringExtra("imgUri")
-        var uri= Uri.parse(bundleUri)
+        val bundleUri=intent.getStringExtra("imgUri")
+        val uri= Uri.parse(bundleUri)
         binding.photoView.setImageURI(uri)
 
         binding.shareImg.setOnClickListener {
@@ -31,7 +31,5 @@ class FullImageViewActivity : AppCompatActivity() {
         }
 
     }
-
-
 
 }
