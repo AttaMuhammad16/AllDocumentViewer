@@ -436,11 +436,11 @@ class MainActivity : AppCompatActivity() {
         binding.allowPermission.visibility = View.GONE
         binding.textView13.visibility = View.GONE
 
-        var totalSpace=getTotalStorageSpaceInGB()
-        var availableSpace=getAvailableStorageSpaceInGB()
+        val totalSpace=getTotalStorageSpaceInGB()
+        val availableSpace=getAvailableStorageSpaceInGB()
 
-        var totalSpaceFormatter= String.format("%.2f",totalSpace)
-        var availableSpaceFormatter= String.format("%.2f",availableSpace)
+        val totalSpaceFormatter= String.format("%.2f",totalSpace)
+        val availableSpaceFormatter= String.format("%.2f",availableSpace)
 
         binding.totalSpace.text="$totalSpaceFormatter GB"
         binding.availabeSpace.text="$availableSpaceFormatter GB"
@@ -448,7 +448,7 @@ class MainActivity : AppCompatActivity() {
         calculateUsedStoragePercentage(this@MainActivity,object:StorageUsageCallBack{
             override fun onStorageCalculated(usedStoragePercentage: Int) {
                 binding.progressIndicator.apply {
-                    progressTintList = ColorStateList.valueOf(Color.WHITE)
+                    progressTintList = ColorStateList.valueOf(Color.BLUE)
                     progress = usedStoragePercentage
                 }
             }
