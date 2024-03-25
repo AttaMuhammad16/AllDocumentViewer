@@ -28,8 +28,9 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
+                <LinearLayout
                     android:layout_width="match_parent"
+                    android:orientation="horizontal"
                     android:layout_height="match_parent">
 
                     <TextView
@@ -38,36 +39,38 @@
                         android:layout_height="wrap_content"
                         android:text="All Documents Reader"
                         android:textColor="#FFFFFF"
-                        android:textSize="@dimen/_16sdp"
+                        android:textSize="@dimen/_14sdp"
+                        android:layout_gravity="center_vertical"
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
+                        <View
+                            android:layout_width="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_gravity="center_vertical"
+                            android:layout_height="1dp"/>
 
                         <ImageView
-                            android:layout_width="@dimen/_25sdp"
-                            android:layout_height="@dimen/_25sdp"
+                            android:layout_width="@dimen/_22sdp"
+                            android:layout_height="@dimen/_22sdp"
                             android:layout_margin="@dimen/_5sdp"
                             android:src="@drawable/premium"
+                            android:layout_gravity="center_vertical"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
+
                         <ImageView
                             android:id="@+id/refresh"
-                            android:layout_width="@dimen/_25sdp"
-                            android:layout_height="@dimen/_25sdp"
+                            android:layout_width="@dimen/_22sdp"
+                            android:layout_height="@dimen/_22sdp"
                             android:layout_margin="@dimen/_5sdp"
                             android:src="@drawable/baseline_refresh_24"
                             android:visibility="gone"
+                            android:layout_gravity="center_vertical"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
@@ -75,16 +78,16 @@
 
                         <ImageView
                             android:id="@+id/menuImg"
-                            android:layout_width="@dimen/_25sdp"
-                            android:layout_height="@dimen/_25sdp"
+                            android:layout_width="@dimen/_22sdp"
+                            android:layout_height="@dimen/_22sdp"
                             android:layout_margin="@dimen/_5sdp"
                             android:src="@drawable/baseline_more_vert_24"
+                            android:layout_gravity="center_vertical"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
                             app:tint="@color/white" />
-                    </LinearLayout>
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                </LinearLayout>
             </androidx.appcompat.widget.Toolbar>
 
             <TextView
@@ -175,8 +178,8 @@
                 android:layout_marginStart="@dimen/_5sdp"
                 android:layout_marginEnd="@dimen/_5sdp"
                 android:layout_marginBottom="@dimen/_7sdp"
-                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView2">
@@ -1330,7 +1333,7 @@
                                     android:layout_height="wrap_content"
                                     android:text="Total: "
                                     android:textColor="@color/white"
-                                    android:textSize="@dimen/_14sdp"
+                                    android:textSize="@dimen/_12sdp"
                                     android:textStyle="bold" />
 
                                 <TextView
@@ -1339,14 +1342,14 @@
                                     android:layout_height="wrap_content"
                                     android:text="0.0 GB"
                                     android:textColor="@color/white"
-                                    android:textSize="@dimen/_14sdp" />
+                                    android:textSize="@dimen/_12sdp" />
 
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="  Available:  "
                                     android:textColor="@color/white"
-                                    android:textSize="@dimen/_14sdp"
+                                    android:textSize="@dimen/_12sdp"
                                     android:textStyle="bold" />
 
                                 <TextView
@@ -1355,7 +1358,7 @@
                                     android:layout_height="wrap_content"
                                     android:text="0.0 GB"
                                     android:textColor="@color/white"
-                                    android:textSize="@dimen/_14sdp" />
+                                    android:textSize="@dimen/_12sdp" />
                             </LinearLayout>
 
                             <com.google.android.material.progressindicator.LinearProgressIndicator
