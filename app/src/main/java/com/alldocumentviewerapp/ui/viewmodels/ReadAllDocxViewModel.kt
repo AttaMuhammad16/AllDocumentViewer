@@ -8,27 +8,29 @@ import com.alldocumentviewerapp.models.ImageFolder
 import com.alldocumentviewerapp.models.TotalFilesModel
 import com.alldocumentviewerapp.models.Videos
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import java.io.File
 import javax.inject.Inject
 
 @HiltViewModel
 class ReadAllDocxViewModel @Inject constructor(private val readAllDocxRepo: ReadAllDocxRepo):ViewModel() {
     suspend fun getAllDocx(context:Activity):ArrayList<TotalFilesModel>{
-        return readAllDocxRepo.getAllDocx(context)
+        return withContext(Dispatchers.IO){readAllDocxRepo.getAllDocx(context)}
     }
 
     suspend fun getDocumentFoldersWithFileDetails(directory: File): Map<File, List<TotalFilesModel>>{
-        return readAllDocxRepo.getDocumentFoldersWithFileDetails(directory)
+        return withContext(Dispatchers.IO){readAllDocxRepo.getDocumentFoldersWithFileDetails(directory)}
     }
     suspend fun getAllImageFolders(context: Activity): ArrayList<ImageFolder>{
-        return readAllDocxRepo.getAllImageFolders(context)
+        return withContext(Dispatchers.IO){readAllDocxRepo.getAllImageFolders(context)}
     }
 
     suspend fun getImagesFromFolder(folderName: String,context: Activity): ArrayList<Uri>{
-        return readAllDocxRepo.getImagesFromFolder(folderName,context)
+        return withContext(Dispatchers.IO){readAllDocxRepo.getImagesFromFolder(folderName,context)}
     }
     suspend fun getAllVideosFolders(context: Activity):ArrayList<Videos>{
-        return readAllDocxRepo.getAllVideosFolders(context)
+        return withContext(Dispatchers.IO){readAllDocxRepo.getAllVideosFolders(context)}
     }
 
 }

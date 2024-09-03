@@ -6,7 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.PopupMenu
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.alldocumentviewerapp.R
 import com.alldocumentviewerapp.models.CacheDirModel
@@ -15,6 +17,10 @@ import com.alldocumentviewerapp.ui.activities.AllDocumentsViewActivity
 import com.alldocumentviewerapp.ui.activities.UnRarActivity
 import com.alldocumentviewerapp.ui.activities.UnZipActivity
 import com.alldocumentviewerapp.utils.Utils
+import com.alldocumentviewerapp.utils.Utils.getFileExtension
+import com.alldocumentviewerapp.utils.Utils.openFileWithOtherApps
+import com.alldocumentviewerapp.utils.Utils.rippleEffect
+import com.alldocumentviewerapp.utils.Utils.shareFileWithOthers
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -50,36 +56,93 @@ class RecentFilesAdapter(var list: List<CacheDirModel>, var context: Context) : 
             Utils.rippleEffect(context, it)
         }
 
-        val fileExtension = Utils.getFileExtension(data.fileName)
+        val fileExtension = getFileExtension(data.fileName)
         val iconResource = Utils.getFileIconResource(fileExtension)
         holder.fileIcon.setImageResource(iconResource)
 
         holder.itemView.setOnClickListener {
-            val intent: Intent
-            if (Utils.getFileExtension(data.fileName) ==".zip"){
-                intent= Intent(context, UnZipActivity::class.java)
-            }else if(Utils.getFileExtension(data.fileName) ==".rar"){
-                intent= Intent(context, UnRarActivity::class.java)
-            } else{
-                intent= Intent(context, AllDocumentsViewActivity::class.java)
+            when (getFileExtension(data.fileName)) {
+                ".zip" -> {
+//                    saveCacheData(data)
+//                    openActivity(context, UnZipActivity::class.java, data)
+                    openFileWithOtherApps(context, data.path)
+                }
+                ".rar" -> {
+                    openFileWithOtherApps(context, data.path)
+                }
+                else -> {
+                    saveCacheData(data)
+                    openActivity(context, AllDocumentsViewActivity::class.java, data)
+                }
             }
-
-            var totalFileModel=TotalFilesModel(path = data.path, fileName = data.fileName, fileSize = data.fileSize, dateTime = data.dateTime, type = data.type)
-
-            intent.putExtra("document",totalFileModel)
-            context.startActivity(intent)
-
-            GlobalScope.launch(Dispatchers.IO) {
-                var cacheDir= CacheDirModel(data.path,data.fileName,data.fileSize,data.dateTime,data.type)
-                val fileName = "${data.fileName}.json"
-                val file = File(context.cacheDir, fileName)
-                file.writeText(cacheDir.toJson())
-            }
-
         }
+
+        holder.drop_down_arrow.setOnClickListener {
+            rippleEffect(context, it)
+            showPopupMenu(context, it, data, list.toMutableList())
+        }
+
     }
 
     override fun getItemCount(): Int {
         return list.size
     }
+
+
+    @OptIn(DelicateCoroutinesApi::class)
+    private fun saveCacheData(data: CacheDirModel) {
+        GlobalScope.launch(Dispatchers.IO) {
+            val cacheDir = CacheDirModel(data.path, data.fileName, data.fileSize, data.dateTime, data.type)
+            val fileName = "${data.fileName}.json"
+            val file = File(context.cacheDir, fileName)
+            file.writeText(cacheDir.toJson())
+        }
+    }
+
+    private fun openActivity(context : Context, activityClass: Class<*>, data: CacheDirModel) {
+        var fileModel= TotalFilesModel(uri = null,path=data.path, fileName = data.fileName, fileSize = data.fileSize, dateTime = data.dateTime, type = data.type)
+        val intent = Intent(context, activityClass)
+        intent.putExtra("document",fileModel)
+        context.startActivity(intent)
+    }
+
+    private fun showPopupMenu(context: Context, view: View, data: CacheDirModel, list: MutableList<CacheDirModel>) {
+        val popupMenu = PopupMenu(context, view)
+        popupMenu.menuInflater.inflate(R.menu.share_file_menu, popupMenu.menu)
+        popupMenu.setOnMenuItemClickListener { item ->
+            when (item.itemId) {
+                R.id.shareApp -> {
+                    shareFileWithOthers(context, File(data.path))
+                    true
+                }
+                R.id.delete -> {
+                    deleteFile(context, data, list)
+                    true
+                }
+                else -> false
+            }
+        }
+        popupMenu.show()
+    }
+
+    private fun deleteFile(context: Context, data: CacheDirModel, list: MutableList<CacheDirModel>) {
+        val fileToDelete = File(data.path)
+        if (fileToDelete.exists()) {
+            if (fileToDelete.delete()) {
+                Utils.refreshMediaScanner(context, fileToDelete.path)
+                val position = list.indexOf(data)
+                if (position != -1) {
+                    list.removeAt(position)
+                    notifyItemRemoved(position)
+                }
+                Toast.makeText(context, "File deleted successfully", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(context, "Failed to delete file", Toast.LENGTH_SHORT).show()
+            }
+        } else {
+            Toast.makeText(context, "File does not exist", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+
 }

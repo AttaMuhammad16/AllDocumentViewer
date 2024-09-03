@@ -8,6 +8,7 @@ import android.app.usage.StorageStatsManager
 import android.content.ActivityNotFoundException
 import android.content.ClipData
 import android.content.ClipboardManager
+import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -23,6 +24,7 @@ import android.os.Environment
 import android.os.StatFs
 import android.os.storage.StorageManager
 import android.provider.Browser
+import android.provider.DocumentsContract
 import android.provider.MediaStore
 import android.text.Spannable
 import android.text.SpannableString
@@ -597,6 +599,35 @@ object Utils {
         val chooserIntent = Intent.createChooser(intent, "Choose an app to open this file")
         context.startActivity(chooserIntent) // Start the chooser intent
     }
+
+
+
+    suspend fun deleteFileFromUri(context: Context, uriString: String?) {
+        if (uriString.isNullOrEmpty()) {
+            return
+        }
+
+        val uri = Uri.parse(uriString)
+        val contentResolver: ContentResolver = context.contentResolver
+
+        try {
+            // For content URIs, use ContentResolver to delete
+            val result = contentResolver.delete(uri, null, null)
+
+            if (result != null && result > 0) {
+                // Successfully deleted
+                Toast.makeText(context, "File deleted successfully", Toast.LENGTH_SHORT).show()
+            } else {
+                // File not found or deletion failed
+                Toast.makeText(context, "Failed to delete file", Toast.LENGTH_SHORT).show()
+            }
+        } catch (e: Exception) {
+            // Handle any exceptions
+            Toast.makeText(context, "Error occurred: ${e.message}", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+
 
 
 

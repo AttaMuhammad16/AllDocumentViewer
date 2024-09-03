@@ -24,13 +24,15 @@ class ShowImagesActivity : AppCompatActivity() {
     lateinit var binding: ActivityShowImagesBinding
     lateinit var listOfUri:ArrayList<Uri>
     val readAllDocxViewModel:ReadAllDocxViewModel by viewModels()
+    var bundle:String?=null
     lateinit var adapter: ShowImagesAdapter
+    var previousList:ArrayList<Uri> = ArrayList()
     @SuppressLint("NotifyDataSetChanged")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_show_images)
         Utils.statusBarColor(this)
-        var bundle=intent.getStringExtra("videoTitle")
+        bundle=intent.getStringExtra("videoTitle")
         binding.titleTv.text=bundle
         listOfUri= ArrayList()
         binding.backArrowImg.setOnClickListener {
@@ -38,19 +40,37 @@ class ShowImagesActivity : AppCompatActivity() {
                 onBackPressed()
             }
         }
+        lifecycleScope.launch {
+            previousList=async (Dispatchers.IO){ readAllDocxViewModel.getImagesFromFolder(bundle!!,this@ShowImagesActivity) }.await()
+            adapter= ShowImagesAdapter(previousList,this@ShowImagesActivity)
+            val layoutManager= StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL)
+            binding.recyclerView.adapter=adapter
+            binding.recyclerView.layoutManager=layoutManager
+            adapter.notifyDataSetChanged()
+        }
 
-        var job=CoroutineScope(Dispatchers.IO).async {
+    }
+
+
+    @SuppressLint("NotifyDataSetChanged")
+    override fun onResume() {
+        super.onResume()
+
+        val job=CoroutineScope(Dispatchers.IO).async {
             listOfUri=readAllDocxViewModel.getImagesFromFolder(bundle!!,this@ShowImagesActivity)
         }
 
         lifecycleScope.launch {
             job.await()
-            Log.i("TAG", "onCreate:${listOfUri.size}")
-            adapter= ShowImagesAdapter(listOfUri,this@ShowImagesActivity)
-            var layoutManager= StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL)
-            binding.recyclerView.adapter=adapter
-            binding.recyclerView.layoutManager=layoutManager
-            adapter.notifyDataSetChanged()
+            if (listOfUri!=previousList){
+                previousList=listOfUri
+                adapter= ShowImagesAdapter(listOfUri,this@ShowImagesActivity)
+                val layoutManager= StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL)
+                binding.recyclerView.adapter=adapter
+                binding.recyclerView.layoutManager=layoutManager
+                adapter.notifyDataSetChanged()
+            }
         }
+
     }
 }

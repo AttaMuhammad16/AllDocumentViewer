@@ -37,25 +37,38 @@
                 android:paddingStart="@dimen/_12sdp"
                 android:textColor="@color/white"
                 android:text="Images" />
+
+            <ImageView
+                android:id="@+id/deleteImg"
+                android:layout_width="@dimen/_25sdp"
+                android:layout_gravity="end"
+                android:src="@drawable/baseline_delete_24"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:layout_height="@dimen/_25sdp"
+                app:tint="@color/white" />
+
             <ImageView
                 android:id="@+id/shareImg"
-                android:layout_width="@dimen/_30sdp"
+                android:layout_width="@dimen/_25sdp"
                 android:layout_gravity="end"
                 android:src="@drawable/baseline_share_24"
                 android:layout_marginEnd="@dimen/_10sdp"
-                android:layout_height="@dimen/_30sdp"
+                android:layout_height="@dimen/_25sdp"
                 app:tint="@color/white" />
+
+
         </androidx.appcompat.widget.Toolbar>
 
         <com.github.chrisbanes.photoview.PhotoView
             android:id="@+id/photoView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:scaleX="1"
+            android:scaleY="1"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toolBAR" />
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
