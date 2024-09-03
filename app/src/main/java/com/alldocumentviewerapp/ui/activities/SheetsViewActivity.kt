@@ -25,13 +25,16 @@ class SheetsViewActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_sheets_view)
         Utils.statusBarColor(this)
         list= ArrayList()
+
+        list = intent.getParcelableArrayListExtra("sheetsFilesList")!!
+
         if (list.isEmpty()){
             binding.blank.visibility= View.VISIBLE
         }else{
             binding.blank.visibility=View.GONE
         }
 
-        list = intent.getParcelableArrayListExtra("sheetsFilesList")!!
+
         binding.backArrowImg.setOnClickListener {
             Utils.navigationToMainActivity(this, binding.backArrowImg) {
                 onBackPressed()

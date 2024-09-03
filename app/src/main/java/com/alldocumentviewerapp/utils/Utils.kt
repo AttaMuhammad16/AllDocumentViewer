@@ -501,14 +501,7 @@ object Utils {
 
     fun shareFileWithOthers(context: Context, file: File) {
         val fileUri = FileProvider.getUriForFile(context, "com.alldocumentviewerapp.fileprovider", file)
-        val shareIntent = Intent().apply {
-            action = Intent.ACTION_SEND
-            putExtra(Intent.EXTRA_STREAM, fileUri)
-            type = "application/*"
-            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-        }
-        val chooserIntent = Intent.createChooser(shareIntent, "Share File")
-        context.startActivity(chooserIntent)
+        shareFileWithOthersViaUri(context,fileUri)
     }
 
     fun shareFileWithOthersViaUri(context: Context, uri:Uri) {

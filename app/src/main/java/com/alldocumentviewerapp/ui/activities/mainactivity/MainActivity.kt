@@ -1,4 +1,4 @@
-package com.alldocumentviewerapp.ui.activities
+package com.alldocumentviewerapp.ui.activities.mainactivity
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -27,6 +27,27 @@ import com.alldocumentviewerapp.R
 import com.alldocumentviewerapp.data.StorageUsageCallBack
 import com.alldocumentviewerapp.databinding.ActivityMainBinding
 import com.alldocumentviewerapp.models.TotalFilesModel
+import com.alldocumentviewerapp.ui.activities.AddPdfPasswordActivity
+import com.alldocumentviewerapp.ui.activities.AllFoldersActivity
+import com.alldocumentviewerapp.ui.activities.CreateZipFileActivity
+import com.alldocumentviewerapp.ui.activities.DocAndDocxViewActivity
+import com.alldocumentviewerapp.ui.activities.GetImagesFolder
+import com.alldocumentviewerapp.ui.activities.GetVideosActivity
+import com.alldocumentviewerapp.ui.activities.ImageToPdfActivity
+import com.alldocumentviewerapp.ui.activities.MergePdfActivity
+import com.alldocumentviewerapp.ui.activities.PDFViewActivity
+import com.alldocumentviewerapp.ui.activities.PdfToImageActivity
+import com.alldocumentviewerapp.ui.activities.RARFilesViewActivity
+import com.alldocumentviewerapp.ui.activities.RTFFileViewActivity
+import com.alldocumentviewerapp.ui.activities.ReadOnlinePdfActivity
+import com.alldocumentviewerapp.ui.activities.RecentFilesActivity
+import com.alldocumentviewerapp.ui.activities.SearchDocumentsActivity
+import com.alldocumentviewerapp.ui.activities.SheetsViewActivity
+import com.alldocumentviewerapp.ui.activities.SlidesViewActivity
+import com.alldocumentviewerapp.ui.activities.TextFileViewAcitivyt
+import com.alldocumentviewerapp.ui.activities.TextToPdfActivity
+import com.alldocumentviewerapp.ui.activities.WordToPdfActivity
+import com.alldocumentviewerapp.ui.activities.ZipUnZipActivity
 import com.alldocumentviewerapp.ui.activities.barcodescanner.BarCodeScanner
 import com.alldocumentviewerapp.ui.activities.notes.NotesViewActivity
 import com.alldocumentviewerapp.ui.viewmodels.ReadAllDocxViewModel
