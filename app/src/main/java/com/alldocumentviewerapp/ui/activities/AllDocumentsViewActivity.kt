@@ -74,7 +74,9 @@ class AllDocumentsViewActivity : AppCompatActivity() {
                 var completeUrl=""
                 if (fileExtension==".ppt"){
                     completeUrl="https://docs.google.com/gview?embedded=true&url=$encodedUrl"
-                }else{
+                }else if (fileExtension==".txt"){
+                    completeUrl="https://docs.google.com/gview?embedded=true&url=$encodedUrl"
+                } else{
                     completeUrl = "https://view.officeapps.live.com/op/view.aspx?src=$encodedUrl"
                 }
                 binding.webView.loadUrl(completeUrl)
@@ -91,7 +93,6 @@ class AllDocumentsViewActivity : AppCompatActivity() {
                 binding.pdfView.visibility = View.VISIBLE
                 binding.pdfView.initWithFile(File(filePath))
             }
-
         } else if (fileExtension == ".xls") {
             binding.webView.visibility = View.VISIBLE
             uploadFiles(filePath)
