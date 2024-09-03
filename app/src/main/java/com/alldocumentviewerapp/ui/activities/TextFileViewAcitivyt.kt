@@ -3,6 +3,7 @@ package com.alldocumentviewerapp.ui.activities
 import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.widget.SearchView
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
@@ -27,6 +28,12 @@ class TextFileViewAcitivyt : AppCompatActivity() {
         Utils.statusBarColor(this)
         list= ArrayList()
         list = intent.getParcelableArrayListExtra("textFileList")!!
+        if (list.isEmpty()){
+            binding.blank.visibility= View.VISIBLE
+        }else{
+            binding.blank.visibility=View.GONE
+        }
+
         binding.backArrowImg.setOnClickListener {
             Utils.navigationToMainActivity(this, binding.backArrowImg) {
                 onBackPressed()

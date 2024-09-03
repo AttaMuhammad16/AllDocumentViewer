@@ -20,7 +20,7 @@ import javax.inject.Inject
 
 
 @HiltViewModel
-class UploadFileViewModel @Inject constructor():ViewModel() {
+class StorageViewModel @Inject constructor():ViewModel() {
     private var _url: MutableLiveData<String> = MutableLiveData()
     var liveUrl: LiveData<String> = _url
 

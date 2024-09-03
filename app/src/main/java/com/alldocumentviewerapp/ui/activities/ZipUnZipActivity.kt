@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.appcompat.widget.SearchView
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
@@ -28,6 +29,13 @@ class ZipUnZipActivity : AppCompatActivity() {
         Utils.statusBarColor(this)
         list= ArrayList()
         list = intent.getParcelableArrayListExtra("zipFileList")!!
+
+        if (list.isEmpty()){
+            binding.blank.visibility= View.VISIBLE
+        }else{
+            binding.blank.visibility=View.GONE
+        }
+
         binding.backArrowImg.setOnClickListener {
             Utils.navigationToMainActivity(this, binding.backArrowImg) {
                 onBackPressed()

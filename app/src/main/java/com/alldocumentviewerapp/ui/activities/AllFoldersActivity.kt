@@ -42,12 +42,11 @@ class AllFoldersActivity : AppCompatActivity() {
             }
         }
 
-        val job = CoroutineScope(Dispatchers.Default).async {
+        val job = lifecycleScope.async {
             withContext(Dispatchers.IO) {
                 if (Environment.getExternalStorageState() == Environment.MEDIA_MOUNTED) {
                     val rootDirectory: File = Environment.getExternalStorageDirectory()
                     val documentFolders: Map<File, List<TotalFilesModel>> = readAllDocxViewModel.getDocumentFoldersWithFileDetails(rootDirectory)
-
 
                     for ((folder, fileDetailsList) in documentFolders) {
                         val allFolders = AllFolders(folder.name, fileDetailsList.size.toString(), ArrayList())

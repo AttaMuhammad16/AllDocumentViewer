@@ -50,6 +50,7 @@ import java.io.File
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
+
     lateinit var binding: ActivityMainBinding
     private lateinit var permissionHelper: PermissionHelper
     val readAllDocxViewModel: ReadAllDocxViewModel by viewModels()
@@ -61,7 +62,6 @@ class MainActivity : AppCompatActivity() {
     var zipList = ArrayList<TotalFilesModel>()
     var rarList = ArrayList<TotalFilesModel>()
 
-
     private val requestPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
             if (isGranted) {
                 if (if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
@@ -70,17 +70,7 @@ class MainActivity : AppCompatActivity() {
                         Toast.makeText(this@MainActivity, "Feature not available on older devices", Toast.LENGTH_LONG).show()
                         true
                     }
-                ) {
-//                   onResume()
-                } else {
-//                    val intent = Intent().apply {
-//                        action = Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION
-//                        data = Uri.fromParts("package", this@MainActivity.packageName, null)
-//                    }
-//                    startActivity(intent)
-                }
-            } else {
-//                permissionHelper.checkPermissionIsGrantedOrNot(this)
+                ) {}
             }
         }
 
@@ -152,51 +142,9 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.search->{
                     lifecycleScope.launch {
-                        delay(1000)
                         startActivity(Intent(this@MainActivity, SearchDocumentsActivity::class.java))
                     }
                 }
-                R.id.word->{
-                    startForDocumentActivity(DocAndDocxViewActivity(), "listOfDocx", docDocxList)
-                }
-                R.id.pdf->{
-                    startForDocumentActivity(PDFViewActivity(), "pdfFilesList", pdfList)
-                }
-                R.id.slides->{
-                    startForDocumentActivity(SlidesViewActivity(), "slideFilesList", slideList)
-                }
-                R.id.sheets->{
-                    startForDocumentActivity(SheetsViewActivity(), "sheetsFilesList", sheetsList)
-                }
-                R.id.text->{
-                    startForDocumentActivity(TextFileViewAcitivyt(), "textFileList", textList)
-                }
-                R.id.zip->{
-                    startForDocumentActivity(ZipUnZipActivity(), "zipFileList", zipList)
-                }
-                R.id.rar->{
-                    startForDocumentActivity(RARFilesViewActivity(), "rarFiles", rarList)
-                }
-                R.id.rtf->{
-                    val rtfList = Utils.getRTFFiles()
-                    startForDocumentActivity(RTFFileViewActivity(), "rtfFileList", rtfList)
-                }
-                R.id.folders->{
-                    startActivity(Intent(this@MainActivity, AllFoldersActivity::class.java))
-                }
-                R.id.recentFiles->{
-                    startActivity(Intent(this@MainActivity, RecentFilesActivity::class.java))
-                }
-                R.id.createNotes->{
-                    startActivity(Intent(this@MainActivity, NotesViewActivity::class.java))
-                }
-                R.id.scanQrCode->{
-                    startActivity(Intent(this@MainActivity, BarCodeScanner::class.java))
-                }
-                R.id.scanBarCode->{
-                    startActivity(Intent(this@MainActivity, BarCodeScanner::class.java))
-                }
-
             }
             true
         }
@@ -234,6 +182,7 @@ class MainActivity : AppCompatActivity() {
             startForDocumentActivity(SlidesViewActivity(), "slideFilesList", slideList)
         }
 
+
         binding.sheetLinear.setOnClickListener {
             rippleEff(it)
             startForDocumentActivity(SheetsViewActivity(), "sheetsFilesList", sheetsList)
@@ -250,7 +199,7 @@ class MainActivity : AppCompatActivity() {
             rippleEff(it)
         }
 
-        var rtfList = Utils.getRTFFiles()
+        val rtfList = Utils.getRTFFiles()
         binding.rtfLinear.setOnClickListener {
             startForDocumentActivity(RTFFileViewActivity(), "rtfFileList", rtfList)
             rippleEff(it)
@@ -266,10 +215,6 @@ class MainActivity : AppCompatActivity() {
             startForDocumentActivity(RARFilesViewActivity(), "rarFiles", rarList)
         }
 
-        binding.bookMarksLinear.setOnClickListener {
-            rippleEff(it)
-            startActivity(Intent(this, BookMarksActivity::class.java))
-        }
 
         binding.imageLinear.setOnClickListener {
             rippleEff(it)
@@ -285,6 +230,7 @@ class MainActivity : AppCompatActivity() {
             rippleEff(it)
             startActivity(Intent(this@MainActivity, ImageToPdfActivity::class.java))
         }
+
         binding.textToPdfLinear.setOnClickListener {
             rippleEff(it)
             startActivity(Intent(this@MainActivity, TextToPdfActivity::class.java))
@@ -467,7 +413,7 @@ class MainActivity : AppCompatActivity() {
         rarFilesCounter: Int
     ) {
 
-        var rtfFilesList = Utils.getRTFFiles()
+        val rtfFilesList = Utils.getRTFFiles()
         binding.countAllDocx.text = "($totalFiles)"
         binding.countWord.text = "($wordFiles)"
         binding.pdfCount.text = "($pdfCount)"

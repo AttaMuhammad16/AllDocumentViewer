@@ -22,12 +22,11 @@ import androidx.databinding.DataBindingUtil
 import com.alldocumentviewerapp.R
 import com.alldocumentviewerapp.databinding.ActivityAllDocumentsViewBinding
 import com.alldocumentviewerapp.models.TotalFilesModel
-import com.alldocumentviewerapp.ui.viewmodels.UploadFileViewModel
+import com.alldocumentviewerapp.ui.viewmodels.StorageViewModel
 import com.alldocumentviewerapp.utils.Utils
 import com.alldocumentviewerapp.utils.Utils.getFileExtension
 import com.alldocumentviewerapp.utils.Utils.isPdfPasswordProtected
 import com.alldocumentviewerapp.utils.Utils.statusBarColor
-import com.github.barteksc.pdfviewer.util.FitPolicy
 import com.itextpdf.kernel.pdf.PdfDocument
 import com.itextpdf.kernel.pdf.PdfReader
 import com.itextpdf.kernel.pdf.ReaderProperties
@@ -36,19 +35,16 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import org.apache.poi.hssf.usermodel.HSSFWorkbook
-import org.apache.poi.ss.usermodel.*
-import org.apache.poi.xssf.usermodel.XSSFWorkbook
 import java.io.File
-import java.io.FileInputStream
+import java.net.URLEncoder
 
 
 @AndroidEntryPoint
 class AllDocumentsViewActivity : AppCompatActivity() {
     lateinit var binding: ActivityAllDocumentsViewBinding
     var bundle: TotalFilesModel? = null
-    var getExtension = ""
-    val uploadFileViewModel :UploadFileViewModel by viewModels()
+    var fileExtension = ""
+    val storageViewModel :StorageViewModel by viewModels()
     var filePath=""
     var urlForReturn=""
 
@@ -63,7 +59,7 @@ class AllDocumentsViewActivity : AppCompatActivity() {
         filePath = bundle?.path?:"none"
         binding.fileNameTv.isSelected=true
 
-        getExtension = getFileExtension(bundle!!.fileName)
+        fileExtension = getFileExtension(bundle!!.fileName)
 
         binding.backArrowImg.setOnClickListener {
             Utils.navigationToMainActivity(this, binding.backArrowImg) {
@@ -71,31 +67,44 @@ class AllDocumentsViewActivity : AppCompatActivity() {
             }
         }
 
-        if (getExtension == ".pdf") {
-            val bol=isPdfPasswordProtected(filePath?:null)
+        storageViewModel.liveUrl.observe(this) { fileUrl ->
+            if (fileUrl.isNotEmpty()) {
+                urlForReturn=fileUrl
+                val encodedUrl = URLEncoder.encode(fileUrl, "UTF-8")
+                var completeUrl=""
+                if (fileExtension==".ppt"){
+                    completeUrl="https://docs.google.com/gview?embedded=true&url=$encodedUrl"
+                }else{
+                    completeUrl = "https://view.officeapps.live.com/op/view.aspx?src=$encodedUrl"
+                }
+                binding.webView.loadUrl(completeUrl)
+            }
+        }
 
+
+        if (fileExtension == ".pdf") {
+            val bol=isPdfPasswordProtected(filePath?:null)
             if (bol){
                 Toast.makeText(this@AllDocumentsViewActivity, "Password Protected file", Toast.LENGTH_SHORT).show()
                 showCustomDialog()
             }else{
                 binding.pdfView.visibility = View.VISIBLE
-                binding.pdfView.fromFile(File(filePath)).defaultPage(0).enableSwipe(true).swipeHorizontal(false).enableDoubletap(true).onLoad { /* handle loading */ }.scrollHandle(null).pageFitPolicy(FitPolicy.WIDTH).load()
+                binding.pdfView.initWithFile(File(filePath))
             }
 
-        } else if (getExtension == ".xls") {
+        } else if (fileExtension == ".xls") {
             binding.webView.visibility = View.VISIBLE
-            readXlsFile(filePath)
-        } else if (getExtension == ".xlsx") {
+            uploadFiles(filePath)
+        } else if (fileExtension == ".xlsx") {
             binding.webView.visibility = View.VISIBLE
-            readXlsxFile(filePath)
             uploadFiles(filePath)
-        } else if (getExtension == ".doc" || getExtension==".docx"){
+        } else if (fileExtension == ".doc" || fileExtension==".docx"){
             uploadFiles(filePath)
-        }else if (getExtension==".ppt"){
+        }else if (fileExtension==".ppt"){
             uploadFiles(filePath)
-        } else if(getExtension==".txt"){
+        } else if(fileExtension==".txt"){
             uploadFiles(filePath)
-        } else if (getExtension==".rtf"){
+        } else if (fileExtension==".rtf"){
             uploadFiles(filePath)
         } else {
             Toast.makeText(this@AllDocumentsViewActivity, "this file can not open", Toast.LENGTH_SHORT).show()
@@ -136,70 +145,9 @@ class AllDocumentsViewActivity : AppCompatActivity() {
 
     }
 
-    private fun readXlsFile(filePath: String) {
-        try {
-            val file = File(filePath)
-            val inputStream = FileInputStream(file)
-            val workbook = HSSFWorkbook(inputStream)
-            readExcelFile(workbook)
-
-        }catch (e: Exception) {
-            e.printStackTrace()
-        }
-    }
-
-    private fun readXlsxFile(filePath: String) {
-        try {
-            val file = File(filePath)
-            val inputStream = FileInputStream(file)
-
-//            val factory = DocumentBuilderFactory.newInstance().apply {
-//                isNamespaceAware = false
-//            }
-//            val builder = factory.newDocumentBuilder()
-//            val document = builder.parse(inputStream)
-
-            // Continue with the rest of your Xlsx processing logic
-            val workbook = XSSFWorkbook(inputStream)
-            Log.i("TAG", "readXlsxFile: $workbook")
-            readExcelFile(workbook)
-            workbook.close()
-        } catch (e: Exception) {
-            Log.e("TAG", "readXlsxFile: Error", e)
-        }
-
-    }
-
-    private fun readExcelFile(workbook: Workbook) {
-        try {
-            val sheet = workbook.getSheetAt(0)
-            val rows = sheet.iterator()
-            val result = StringBuilder()
-            result.append("<table style='border-collapse: collapse; width: 100%;'>")
-            while (rows.hasNext()) {
-                val currentRow = rows.next()
-                val cellsInRow = currentRow.iterator()
-                result.append("<tr style='border: 1px solid #000;'>")
-                while (cellsInRow.hasNext()) {
-                    val currentCell = cellsInRow.next()
-                    result.append("<td style='border: 1px solid #000; padding: 8px;'>")
-                    result.append(currentCell.toString())
-                    result.append("</td>")
-                }
-                result.append("</tr>")
-            }
-            result.append("</table>")
-            binding.webView.visibility = View.VISIBLE
-            binding.webView.loadDataWithBaseURL(null, result.toString(), "text/html", "UTF-8", null)
-        } catch (e: Exception) {
-            e.printStackTrace()
-        } finally {
-            workbook.close()
-        }
-    }
 
     @SuppressLint("SetJavaScriptEnabled")
-    fun uploadFiles(filePath: String):String {
+    fun uploadFiles(filePath: String) {
         binding.pd.visibility = View.VISIBLE
         binding.webView.apply {
             visibility = View.VISIBLE
@@ -214,7 +162,7 @@ class AllDocumentsViewActivity : AppCompatActivity() {
             settings.allowUniversalAccessFromFileURLs = true
         }
 
-        uploadFileViewModel.uploadFile(bundle!!,filePath,binding.pd,this@AllDocumentsViewActivity)
+        storageViewModel.uploadFile(bundle!!,filePath,binding.pd,this@AllDocumentsViewActivity)
 
         binding.webView.webViewClient = object : WebViewClient() {
 
@@ -228,27 +176,22 @@ class AllDocumentsViewActivity : AppCompatActivity() {
                 super.onPageStarted(view, url, favicon)
             }
         }
-        urlForReturn=""
-        uploadFileViewModel.liveUrl.observe(this) { url ->
-            urlForReturn=url
-            binding.webView.loadUrl("https://docs.google.com/gview?embedded=true&url=$url")
-        }
-
-        return urlForReturn
     }
 
     fun loadPdfIntoView(filePath: String, password: String?) {
         binding.pdfView.visibility = View.VISIBLE
-        binding.pdfView.fromFile(File(filePath))
-            .password(password)
-            .defaultPage(0)
-            .enableSwipe(true)
-            .swipeHorizontal(false)
-            .enableDoubletap(true)
-            .onLoad { /* handle loading */ }
-            .scrollHandle(null)
-            .pageFitPolicy(FitPolicy.WIDTH)
-            .load()
+//        binding.pdfView.fromFile(File(filePath))
+//            .password(password)
+//            .defaultPage(0)
+//            .enableSwipe(true)
+//            .swipeHorizontal(false)
+//            .enableDoubletap(true)
+//            .onLoad { /* handle loading */ }
+//            .scrollHandle(null)
+//            .pageFitPolicy(FitPolicy.WIDTH)
+//            .load()
+
+        binding.pdfView.initWithFile(File(filePath))
     }
 
 
@@ -270,7 +213,7 @@ class AllDocumentsViewActivity : AppCompatActivity() {
         }
 
         okBtn.setOnClickListener {
-            var pass=passwordEdt.text.toString()
+            val pass=passwordEdt.text.toString()
 
             if (pass.isNotEmpty()){
                 try {
@@ -303,7 +246,7 @@ class AllDocumentsViewActivity : AppCompatActivity() {
         super.onBackPressed()
         GlobalScope.launch {
             if (urlForReturn.isNotEmpty()){
-                uploadFileViewModel.deleteImageToFirebaseStorage(urlForReturn)
+                storageViewModel.deleteImageToFirebaseStorage(urlForReturn)
             }
         }
     }

@@ -5,6 +5,7 @@ pluginManagement {
         gradlePluginPortal()
         maven {url("https://jcenter.bintray.com")}
         maven {url("https://jitpack.io")}
+        maven{url "https://dl.bintray.com/infideap2/Drawer-Behavior"}
         jcenter()
     }
 }
@@ -15,8 +16,12 @@ dependencyResolutionManagement {
         mavenCentral()
         maven {url("https://jcenter.bintray.com")}
         maven {url("https://jitpack.io")}
+        maven{url "https://dl.bintray.com/infideap2/Drawer-Behavior"}
         jcenter()
     }
 }
 rootProject.name = "All Document Viewer"
 include ':app'
+
+
+

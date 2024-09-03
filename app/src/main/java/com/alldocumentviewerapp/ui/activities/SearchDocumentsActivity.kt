@@ -3,6 +3,7 @@ package com.alldocumentviewerapp.ui.activities
 import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.widget.SearchView
 import androidx.databinding.DataBindingUtil
@@ -14,6 +15,7 @@ import com.alldocumentviewerapp.databinding.ActivitySearchDocumentsBinding
 import com.alldocumentviewerapp.models.TotalFilesModel
 import com.alldocumentviewerapp.ui.viewmodels.ReadAllDocxViewModel
 import com.alldocumentviewerapp.utils.Utils
+import com.alldocumentviewerapp.utils.Utils.showProgressDialog
 import com.alldocumentviewerapp.utils.Utils.statusBarColor
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.joinAll
@@ -27,6 +29,7 @@ class SearchDocumentsActivity : AppCompatActivity() {
     lateinit var list:ArrayList<TotalFilesModel>
     var temp:ArrayList<TotalFilesModel> = ArrayList()
     lateinit var adapter:SearchDocumentAdapter
+
     @SuppressLint("NotifyDataSetChanged")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,13 +51,20 @@ class SearchDocumentsActivity : AppCompatActivity() {
        binding.searchView.requestFocus()
 
         lifecycleScope.launch{
+            val dialog=showProgressDialog(this@SearchDocumentsActivity,"Loading...")
             list=readAllDocxViewModel.getAllDocx(this@SearchDocumentsActivity)
-            joinAll()
+            if (list.isEmpty()){
+                binding.blank.visibility= View.VISIBLE
+            }else{
+                binding.blank.visibility= View.GONE
+            }
             adapter= SearchDocumentAdapter(list,this@SearchDocumentsActivity)
-            var layoutManager=LinearLayoutManager(this@SearchDocumentsActivity)
+            val layoutManager=LinearLayoutManager(this@SearchDocumentsActivity)
             binding.recyclerView.adapter=adapter
             binding.recyclerView.layoutManager=layoutManager
             adapter.notifyDataSetChanged()
+            dialog.dismiss()
+
         }
 
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {

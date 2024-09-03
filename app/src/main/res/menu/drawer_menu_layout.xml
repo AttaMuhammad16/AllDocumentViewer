@@ -5,66 +5,6 @@
         android:id="@+id/search"
         android:icon="@drawable/baseline_search_24"
         android:title="Search Documents" />
-
-    <item
-        android:id="@+id/word"
-        android:icon="@drawable/outline_word"
-        android:title="Word Files"
-        android:iconTint="@null"/>
-
-    <item
-        android:id="@+id/pdf"
-        android:title="PDF Files"
-        android:icon="@drawable/outline_pdf"/>
-
-    <item
-        android:id="@+id/slides"
-        android:title="Slides Files"
-        android:icon="@drawable/outline_slide"/>
-    <item
-        android:id="@+id/sheets"
-        android:title="Sheets Files"
-        android:icon="@drawable/outline_sheet"/>
-    <item
-        android:id="@+id/text"
-        android:title="Text Files"
-        android:icon="@drawable/outline_text"/>
-
-    <item
-        android:id="@+id/zip"
-        android:title="Zip Files"
-        android:icon="@drawable/outline_zip"/>
-
-    <item
-        android:id="@+id/rar"
-        android:title="RAR Files"
-        android:icon="@drawable/outline_rar"/>
-
-    <item
-        android:id="@+id/rtf"
-        android:title="RTF Files"
-        android:icon="@drawable/outline_rtf"/>
-
-    <item
-        android:id="@+id/folders"
-        android:title="Folder Files"
-        android:icon="@drawable/outline_folders"/>
-    <item
-        android:id="@+id/recentFiles"
-        android:title="Recent Files"
-        android:icon="@drawable/outilne_recent_files"/>
-    <item
-        android:id="@+id/createNotes"
-        android:title="Notes"
-        android:icon="@drawable/create_notes"/>
-    <item
-        android:id="@+id/scanQrCode"
-        android:title="Scan Qr Code"
-        android:icon="@drawable/scan_qr_code"/>
-    <item
-        android:id="@+id/scanBarCode"
-        android:title="Scan Bar Code"
-        android:icon="@drawable/bar_code_scan"/>
     <item
         android:id="@+id/share"
         android:title="Share"

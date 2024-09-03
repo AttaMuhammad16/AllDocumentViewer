@@ -3,6 +3,7 @@ package com.alldocumentviewerapp.ui.activities
 import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.widget.SearchView
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
@@ -10,8 +11,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.alldocumentviewerapp.R
 import com.alldocumentviewerapp.adapters.SearchDocumentAdapter
 import com.alldocumentviewerapp.databinding.ActivityDocAndDocxViewBinding
+import com.alldocumentviewerapp.databinding.DocumentItemRowBinding
 import com.alldocumentviewerapp.models.TotalFilesModel
 import com.alldocumentviewerapp.utils.Utils
+import com.alldocumentviewerapp.utils.Utils.setData
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.joinAll
 import kotlinx.coroutines.launch
@@ -30,6 +33,12 @@ class DocAndDocxViewActivity : AppCompatActivity() {
         Utils.statusBarColor(this@DocAndDocxViewActivity)
         list= ArrayList()
         list = intent.getParcelableArrayListExtra("listOfDocx")!!
+
+        if (list.isEmpty()){
+            binding.blank.visibility= View.VISIBLE
+        }else{
+            binding.blank.visibility= View.GONE
+        }
 
         binding.backArrowImg.setOnClickListener {
             Utils.navigationToMainActivity(this, binding.backArrowImg) {
@@ -69,7 +78,5 @@ class DocAndDocxViewActivity : AppCompatActivity() {
                 return true
             }
         })
-
-
     }
 }

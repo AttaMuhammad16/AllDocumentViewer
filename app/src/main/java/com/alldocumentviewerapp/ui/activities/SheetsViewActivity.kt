@@ -2,6 +2,7 @@ package com.alldocumentviewerapp.ui.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.widget.SearchView
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
@@ -24,6 +25,11 @@ class SheetsViewActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_sheets_view)
         Utils.statusBarColor(this)
         list= ArrayList()
+        if (list.isEmpty()){
+            binding.blank.visibility= View.VISIBLE
+        }else{
+            binding.blank.visibility=View.GONE
+        }
 
         list = intent.getParcelableArrayListExtra("sheetsFilesList")!!
         binding.backArrowImg.setOnClickListener {

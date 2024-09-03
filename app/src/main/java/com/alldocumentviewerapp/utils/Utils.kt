@@ -32,6 +32,7 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.SurfaceView
 import android.view.View
+import android.view.ViewGroup
 import android.webkit.URLUtil
 import android.widget.EditText
 import android.widget.ImageView
@@ -44,6 +45,8 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.core.net.toUri
+import androidx.recyclerview.widget.RecyclerView
+import androidx.viewbinding.ViewBinding
 import com.alldocumentviewerapp.R
 import com.alldocumentviewerapp.data.StorageUsageCallBack
 import com.alldocumentviewerapp.models.TotalFilesModel
@@ -551,6 +554,55 @@ object Utils {
         })
         popupMenu.show()
     }
+
+
+
+
+
+    inline fun <T, VB : ViewBinding> RecyclerView.setData(
+        items: List<T>,
+        crossinline bindingInflater: (LayoutInflater, ViewGroup, Boolean) -> VB,
+        crossinline bindHolder: (binding: VB, item: T, position: Int, holder: DataViewHolder<VB>) -> Unit,
+    ) {
+        val adapter = object : RecyclerView.Adapter<DataViewHolder<VB>>() {
+            override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DataViewHolder<VB> {
+                val layoutInflater = LayoutInflater.from(parent.context)
+                val binding = bindingInflater(layoutInflater, parent, false)
+                return DataViewHolder(binding)
+            }
+            override fun onBindViewHolder(holder: DataViewHolder<VB>, position: Int) {
+                bindHolder(holder.binding, items[position], position, holder)
+            }
+
+            override fun getItemCount(): Int {
+                return items.size
+            }
+        }
+        this.adapter = adapter
+    }
+    class DataViewHolder<VB : ViewBinding>(val binding: VB) : RecyclerView.ViewHolder(binding.root)
+
+
+
+
+    @SuppressLint("QueryPermissionsNeeded")
+    fun openFileWithOtherApps(context: Context, filePath: String) {
+        val file = File(filePath)
+        val uri = FileProvider.getUriForFile(context, "${context.packageName}.fileprovider", file)
+
+        val intent = Intent(Intent.ACTION_VIEW).apply {
+            setDataAndType(uri, "application/x-rar-compressed") // MIME type for .rar files
+            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION) // Grant read permission
+        }
+        val chooserIntent = Intent.createChooser(intent, "Choose an app to open this file")
+        context.startActivity(chooserIntent) // Start the chooser intent
+    }
+
+
+
+
+
+
 
 
 }

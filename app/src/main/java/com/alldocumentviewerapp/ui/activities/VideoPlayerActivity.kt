@@ -27,15 +27,9 @@ class VideoPlayerActivity : AppCompatActivity() {
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         Utils.statusBarColor(this)
-        var bundle=intent.getParcelableExtra<Videos>("data")
+        val bundle=intent.getParcelableExtra<Videos>("data")
         videoUri = bundle!!.videoUri
 
-//        val mediaController = MediaController(this)
-//        mediaController.setAnchorView(binding.videoView)
-//        binding.videoView.setMediaController(mediaController)
-//
-//        binding.videoView.setVideoURI(videoUri)
-//        binding.videoView.start()
 
         if (::videoUri.isInitialized){
             initializePlayer(videoUri)
@@ -65,6 +59,7 @@ class VideoPlayerActivity : AppCompatActivity() {
             player.pause()
         }
     }
+
     override fun onStop() {
         super.onStop()
         player.release()

@@ -30,8 +30,8 @@ class ReadAllDocxImpl @Inject constructor():ReadAllDocxRepo {
     @SuppressLint("NotifyDataSetChanged")
     suspend fun loadDocument(context: Activity):ArrayList<TotalFilesModel> {
         val cursor = getAllMediaFilesCursor(context)
-        var list=ArrayList<TotalFilesModel>()
-        var syn=CoroutineScope(Dispatchers.IO).async {
+        val list=ArrayList<TotalFilesModel>()
+        val syn=CoroutineScope(Dispatchers.IO).async {
             cursor?.use {
                 val idCol = it.getColumnIndexOrThrow(MediaStore.Files.FileColumns._ID)
                 val pathCol = it.getColumnIndexOrThrow(MediaStore.Files.FileColumns.DATA)
