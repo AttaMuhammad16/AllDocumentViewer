@@ -1,8 +1,9 @@
-package com.alldocumentviewerapp.ui.activities
+package com.alldocumentviewerapp.ui.activities.rtffiles
 
 import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.widget.SearchView
 import androidx.databinding.DataBindingUtil
@@ -28,6 +29,7 @@ class RTFFileViewActivity : AppCompatActivity() {
         Utils.statusBarColor(this)
         list= ArrayList()
         list = intent.getParcelableArrayListExtra("rtfFileList")!!
+        Log.i("TAG", "onCreate:$list")
 
         if (list.isEmpty()){
             binding.blank.visibility=View.VISIBLE

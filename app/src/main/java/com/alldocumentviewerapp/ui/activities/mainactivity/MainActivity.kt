@@ -38,7 +38,7 @@ import com.alldocumentviewerapp.ui.activities.MergePdfActivity
 import com.alldocumentviewerapp.ui.activities.PDFViewActivity
 import com.alldocumentviewerapp.ui.activities.PdfToImageActivity
 import com.alldocumentviewerapp.ui.activities.RARFilesViewActivity
-import com.alldocumentviewerapp.ui.activities.RTFFileViewActivity
+import com.alldocumentviewerapp.ui.activities.rtffiles.RTFFileViewActivity
 import com.alldocumentviewerapp.ui.activities.ReadOnlinePdfActivity
 import com.alldocumentviewerapp.ui.activities.RecentFilesActivity
 import com.alldocumentviewerapp.ui.activities.SearchDocumentsActivity
@@ -82,6 +82,7 @@ class MainActivity : AppCompatActivity() {
     var textList = ArrayList<TotalFilesModel>()
     var zipList = ArrayList<TotalFilesModel>()
     var rarList = ArrayList<TotalFilesModel>()
+    var rtfFilesList= ArrayList<TotalFilesModel>()
 
     private val requestPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
             if (isGranted) {
@@ -220,9 +221,8 @@ class MainActivity : AppCompatActivity() {
             rippleEff(it)
         }
 
-        val rtfList = Utils.getRTFFiles()
         binding.rtfLinear.setOnClickListener {
-            startForDocumentActivity(RTFFileViewActivity(), "rtfFileList", rtfList)
+            startForDocumentActivity(RTFFileViewActivity(), "rtfFileList", rtfFilesList)
             rippleEff(it)
         }
 
@@ -434,7 +434,7 @@ class MainActivity : AppCompatActivity() {
         rarFilesCounter: Int
     ) {
 
-        val rtfFilesList = Utils.getRTFFiles()
+        rtfFilesList = Utils.getRTFFiles()
         binding.countAllDocx.text = "($totalFiles)"
         binding.countWord.text = "($wordFiles)"
         binding.pdfCount.text = "($pdfCount)"

@@ -10,12 +10,14 @@ import android.widget.PopupMenu
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.ahmadullahpk.alldocumentreader.activity.All_Document_Reader_Activity
 import com.alldocumentviewerapp.R
 import com.alldocumentviewerapp.models.CacheDirModel
 import com.alldocumentviewerapp.models.TotalFilesModel
 import com.alldocumentviewerapp.ui.activities.AllDocumentsViewActivity
 import com.alldocumentviewerapp.ui.activities.UnRarActivity
 import com.alldocumentviewerapp.ui.activities.UnZipActivity
+import com.alldocumentviewerapp.ui.activities.rtffiles.ShowRTFFiles
 import com.alldocumentviewerapp.utils.Utils
 import com.alldocumentviewerapp.utils.Utils.getFileExtension
 import com.alldocumentviewerapp.utils.Utils.openFileWithOtherApps
@@ -63,15 +65,27 @@ class RecentFilesAdapter(var list: List<CacheDirModel>, var context: Context) : 
         holder.itemView.setOnClickListener {
             when (getFileExtension(data.fileName)) {
                 ".zip" -> {
-//                    saveCacheData(data)
 //                    openActivity(context, UnZipActivity::class.java, data)
                     openFileWithOtherApps(context, data.path)
                 }
                 ".rar" -> {
                     openFileWithOtherApps(context, data.path)
                 }
-                else -> {
-                    saveCacheData(data)
+                ".rtf"->{
+                    val intent = Intent(context, ShowRTFFiles::class.java)
+                    intent.putExtra("path", data.path)
+                    intent.putExtra("name", data.fileName)
+                    intent.putExtra("fromAppActivity", true)
+                    context.startActivity(intent)
+                }
+                ".doc",".docx",".xls",".xlsx",".ppt",".pptx",".csv",".json",".html",".xml",".txt",".kt"->{
+                    val intent = Intent(context, All_Document_Reader_Activity::class.java)
+                    intent.putExtra("path", data.path)
+                    intent.putExtra("name", data.fileName)
+                    intent.putExtra("fromAppActivity", true)
+                    context.startActivity(intent)
+                }
+                ".pdf"->{
                     openActivity(context, AllDocumentsViewActivity::class.java, data)
                 }
             }

@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/main_app_color"
-        tools:context=".ui.activities.RTFFileViewActivity">
+        tools:context=".ui.activities.rtffiles.RTFFileViewActivity">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolBAR"

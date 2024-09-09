@@ -35,7 +35,7 @@ class RecentFilesActivity : AppCompatActivity() {
 
         var list=ArrayList<List<CacheDirModel>>()
         binding.pd.visibility=View.VISIBLE
-        var job = CoroutineScope(Dispatchers.IO).async {
+        var job = lifecycleScope.async((Dispatchers.IO)) {
             var data=readFilesFromCache(this@RecentFilesActivity)
             list.add(data)
         }

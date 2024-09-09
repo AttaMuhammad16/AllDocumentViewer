@@ -10,22 +10,22 @@
     <uses-permission
         android:name="android.permission.READ_EXTERNAL_STORAGE"
         android:maxSdkVersion="32"
-        tools:replace="android:maxSdkVersion"/>
+        tools:replace="android:maxSdkVersion" />
     <uses-permission
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         android:maxSdkVersion="32"
-        tools:replace="android:maxSdkVersion"/>
+        tools:replace="android:maxSdkVersion" />
     <uses-permission
         android:name="android.permission.MANAGE_EXTERNAL_STORAGE"
         tools:ignore="ScopedStorage" />
     <uses-permission android:name="android.permission.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES"
+    <uses-permission
+        android:name="android.permission.READ_MEDIA_IMAGES"
         tools:ignore="SelectedPhotoAccess" />
-
-    <uses-permission android:name="android.permission.READ_MEDIA_VIDEO"
+    <uses-permission
+        android:name="android.permission.READ_MEDIA_VIDEO"
         tools:ignore="SelectedPhotoAccess" />
-
 
     <application
         android:name=".utils.App"
@@ -39,6 +39,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AllDocumentViewer"
         tools:targetApi="31">
+        <activity
+            android:name=".ui.activities.rtffiles.ShowRTFFiles"
+            android:exported="false" />
         <activity
             android:name=".ui.activities.PrivacyPolicyActivity"
             android:exported="false" />
@@ -105,7 +108,7 @@
             android:name=".ui.activities.AllFoldersActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.activities.RTFFileViewActivity"
+            android:name=".ui.activities.rtffiles.RTFFileViewActivity"
             android:exported="false" />
         <activity
             android:name=".ui.activities.ZipUnZipActivity"
@@ -160,7 +163,6 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
-
     </application>
 
 </manifest>

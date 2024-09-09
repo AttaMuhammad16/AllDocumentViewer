@@ -17,6 +17,7 @@ import com.alldocumentviewerapp.R
 import com.alldocumentviewerapp.models.CacheDirModel
 import com.alldocumentviewerapp.models.TotalFilesModel
 import com.alldocumentviewerapp.ui.activities.AllDocumentsViewActivity
+import com.alldocumentviewerapp.ui.activities.rtffiles.ShowRTFFiles
 import com.alldocumentviewerapp.utils.Utils
 import com.alldocumentviewerapp.utils.Utils.formatDateString
 import com.alldocumentviewerapp.utils.Utils.formatFileSize
@@ -25,6 +26,7 @@ import com.alldocumentviewerapp.utils.Utils.getFileIconResource
 import com.alldocumentviewerapp.utils.Utils.openFileWithOtherApps
 import com.alldocumentviewerapp.utils.Utils.rippleEffect
 import com.alldocumentviewerapp.utils.Utils.shareFileWithOthers
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -62,23 +64,29 @@ class SearchDocumentAdapter(var list: ArrayList<TotalFilesModel>, var context: A
         val iconResource = getFileIconResource(fileExtension)
         holder.fileIcon.setImageResource(iconResource)
         holder.itemView.setOnClickListener {
+            saveCacheData(data)
             when (getFileExtension(data.fileName)) {
                 ".zip" -> {
-//                    saveCacheData(data)
                     openFileWithOtherApps(context, data.path)
                 }
                 ".rar" -> {
                     openFileWithOtherApps(context, data.path)
                 }
-                ".doc",".docx",".xls",".xlsx",".ppt",".pptx",".rtf",".csv",".json",".html",".xml",".txt",".kt"->{
-                    saveCacheData(data)
+                ".rtf"->{
+                    val intent = Intent(context, ShowRTFFiles::class.java)
+                    intent.putExtra("path", data.path)
+                    intent.putExtra("name", data.fileName)
+                    intent.putExtra("fromAppActivity", true)
+                    context.startActivity(intent)
+                }
+                ".doc",".docx",".xls",".xlsx",".ppt",".pptx",".csv",".json",".html",".xml",".txt",".kt"->{
                     val intent = Intent(context, All_Document_Reader_Activity::class.java)
                     intent.putExtra("path", data.path)
+                    intent.putExtra("name", data.fileName)
                     intent.putExtra("fromAppActivity", true)
                     context.startActivity(intent)
                 }
                 ".pdf"->{
-                    saveCacheData(data)
                     openActivity(context, AllDocumentsViewActivity::class.java, data)
                 }
             }
@@ -97,7 +105,7 @@ class SearchDocumentAdapter(var list: ArrayList<TotalFilesModel>, var context: A
 
     @OptIn(DelicateCoroutinesApi::class)
     private fun saveCacheData(data: TotalFilesModel) {
-        GlobalScope.launch(Dispatchers.IO) {
+        CoroutineScope(Dispatchers.IO).launch {
             val cacheDir = CacheDirModel(data.path, data.fileName, data.fileSize, data.dateTime, data.type)
             val fileName = "${data.fileName}.json"
             val file = File(context.cacheDir, fileName)

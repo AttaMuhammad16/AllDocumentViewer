@@ -169,7 +169,7 @@ object Utils {
             ".doc", ".docx" -> R.drawable.word
             ".xls", ".xlsx" -> R.drawable.sheet
             ".txt" -> R.drawable.text
-            ".ppt" -> R.drawable.slide
+            ".ppt",".pptx" -> R.drawable.slide
             ".zip" -> R.drawable.zip
             ".rar" -> R.drawable.rar
             ".rtf" -> R.drawable.rtf
@@ -233,8 +233,7 @@ object Utils {
     }
 
     fun isDocumentFile(file: File): Boolean {
-        val documentFileExtensions =
-            arrayOf("pdf", "doc", "docx", "txt", "ppt", "pptx", "xls", "xlsx", "zip", "rar", "rtf")
+        val documentFileExtensions = arrayOf("pdf", "doc", "docx", "txt", "ppt", "pptx", "xls", "xlsx", "zip", "rar", "rtf")
         return documentFileExtensions.any { file.name.endsWith(it, ignoreCase = true) }
     }
 
