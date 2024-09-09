@@ -1,6 +1,8 @@
 package com.alldocumentviewerapp.ui.activities
 
+import android.R.attr.path
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.util.Log
@@ -19,6 +21,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import com.ahmadullahpk.alldocumentreader.activity.All_Document_Reader_Activity
 import com.alldocumentviewerapp.R
 import com.alldocumentviewerapp.databinding.ActivityAllDocumentsViewBinding
 import com.alldocumentviewerapp.models.TotalFilesModel
@@ -41,6 +44,7 @@ import java.net.URLEncoder
 
 @AndroidEntryPoint
 class AllDocumentsViewActivity : AppCompatActivity() {
+
     lateinit var binding: ActivityAllDocumentsViewBinding
     var bundle: TotalFilesModel? = null
     var fileExtension = ""
@@ -67,23 +71,6 @@ class AllDocumentsViewActivity : AppCompatActivity() {
             }
         }
 
-        storageViewModel.liveUrl.observe(this) { fileUrl ->
-            if (fileUrl.isNotEmpty()) {
-                urlForReturn=fileUrl
-                val encodedUrl = URLEncoder.encode(fileUrl, "UTF-8")
-                var completeUrl=""
-                if (fileExtension==".ppt"){
-                    completeUrl="https://docs.google.com/gview?embedded=true&url=$encodedUrl"
-                }else if (fileExtension==".txt"){
-                    completeUrl="https://docs.google.com/gview?embedded=true&url=$encodedUrl"
-                } else{
-                    completeUrl = "https://view.officeapps.live.com/op/view.aspx?src=$encodedUrl"
-                }
-                binding.webView.loadUrl(completeUrl)
-            }
-        }
-
-
         if (fileExtension == ".pdf") {
             val bol=isPdfPasswordProtected(filePath?:null)
             if (bol){
@@ -93,22 +80,6 @@ class AllDocumentsViewActivity : AppCompatActivity() {
                 binding.pdfView.visibility = View.VISIBLE
                 binding.pdfView.initWithFile(File(filePath))
             }
-        } else if (fileExtension == ".xls") {
-            binding.webView.visibility = View.VISIBLE
-            uploadFiles(filePath)
-        } else if (fileExtension == ".xlsx") {
-            binding.webView.visibility = View.VISIBLE
-            uploadFiles(filePath)
-        } else if (fileExtension == ".doc" || fileExtension==".docx"){
-            uploadFiles(filePath)
-        }else if (fileExtension==".ppt"){
-            uploadFiles(filePath)
-        } else if(fileExtension==".txt"){
-            uploadFiles(filePath)
-        } else if (fileExtension==".rtf"){
-            uploadFiles(filePath)
-        } else {
-            Toast.makeText(this@AllDocumentsViewActivity, "this file can not open", Toast.LENGTH_SHORT).show()
         }
 
         binding.moreImg.setOnClickListener {
@@ -146,52 +117,8 @@ class AllDocumentsViewActivity : AppCompatActivity() {
 
     }
 
-
-    @SuppressLint("SetJavaScriptEnabled")
-    fun uploadFiles(filePath: String) {
-        binding.pd.visibility = View.VISIBLE
-        binding.webView.apply {
-            visibility = View.VISIBLE
-            settings.javaScriptEnabled = true
-            settings.allowFileAccess = true
-            settings.allowContentAccess = true
-            settings.displayZoomControls = true
-            settings.supportZoom()
-            settings.displayZoomControls=true
-            settings.builtInZoomControls=true
-            settings.allowFileAccessFromFileURLs = true
-            settings.allowUniversalAccessFromFileURLs = true
-        }
-
-        storageViewModel.uploadFile(bundle!!,filePath,binding.pd,this@AllDocumentsViewActivity)
-
-        binding.webView.webViewClient = object : WebViewClient() {
-
-            override fun onReceivedError(view: WebView?, request: WebResourceRequest?, error: WebResourceError?) {
-                Log.i("TAG", "Error loading URL: $error")
-            }
-            override fun onPageCommitVisible(view: WebView?, url: String?) {
-                super.onPageCommitVisible(view, url)
-            }
-            override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
-                super.onPageStarted(view, url, favicon)
-            }
-        }
-    }
-
     fun loadPdfIntoView(filePath: String, password: String?) {
         binding.pdfView.visibility = View.VISIBLE
-//        binding.pdfView.fromFile(File(filePath))
-//            .password(password)
-//            .defaultPage(0)
-//            .enableSwipe(true)
-//            .swipeHorizontal(false)
-//            .enableDoubletap(true)
-//            .onLoad { /* handle loading */ }
-//            .scrollHandle(null)
-//            .pageFitPolicy(FitPolicy.WIDTH)
-//            .load()
-
         binding.pdfView.initWithFile(File(filePath))
     }
 
@@ -251,6 +178,8 @@ class AllDocumentsViewActivity : AppCompatActivity() {
             }
         }
     }
+
+
 }
 
 

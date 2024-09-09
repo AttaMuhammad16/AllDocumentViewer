@@ -86,5 +86,9 @@ class SearchDocumentsActivity : AppCompatActivity() {
                 return true
             }
         })
+
+
     }
+
+
 }

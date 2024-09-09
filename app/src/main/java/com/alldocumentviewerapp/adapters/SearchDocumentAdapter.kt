@@ -1,10 +1,10 @@
 package com.alldocumentviewerapp.adapters
 
+import android.R.attr.path
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -12,12 +12,11 @@ import android.widget.PopupMenu
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.ahmadullahpk.alldocumentreader.activity.All_Document_Reader_Activity
 import com.alldocumentviewerapp.R
 import com.alldocumentviewerapp.models.CacheDirModel
 import com.alldocumentviewerapp.models.TotalFilesModel
 import com.alldocumentviewerapp.ui.activities.AllDocumentsViewActivity
-import com.alldocumentviewerapp.ui.activities.UnRarActivity
-import com.alldocumentviewerapp.ui.activities.UnZipActivity
 import com.alldocumentviewerapp.utils.Utils
 import com.alldocumentviewerapp.utils.Utils.formatDateString
 import com.alldocumentviewerapp.utils.Utils.formatFileSize
@@ -31,6 +30,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.io.File
+
 
 class SearchDocumentAdapter(var list: ArrayList<TotalFilesModel>, var context: Activity) : RecyclerView.Adapter<SearchDocumentAdapter.ViewHolder>() {
 
@@ -65,13 +65,19 @@ class SearchDocumentAdapter(var list: ArrayList<TotalFilesModel>, var context: A
             when (getFileExtension(data.fileName)) {
                 ".zip" -> {
 //                    saveCacheData(data)
-//                    openActivity(context, UnZipActivity::class.java, data)
                     openFileWithOtherApps(context, data.path)
                 }
                 ".rar" -> {
                     openFileWithOtherApps(context, data.path)
                 }
-                else -> {
+                ".doc",".docx",".xls",".xlsx",".ppt",".pptx",".rtf",".csv",".json",".html",".xml",".txt",".kt"->{
+                    saveCacheData(data)
+                    val intent = Intent(context, All_Document_Reader_Activity::class.java)
+                    intent.putExtra("path", data.path)
+                    intent.putExtra("fromAppActivity", true)
+                    context.startActivity(intent)
+                }
+                ".pdf"->{
                     saveCacheData(data)
                     openActivity(context, AllDocumentsViewActivity::class.java, data)
                 }

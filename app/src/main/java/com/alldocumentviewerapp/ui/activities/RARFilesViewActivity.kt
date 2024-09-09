@@ -1,5 +1,6 @@
 package com.alldocumentviewerapp.ui.activities
 
+import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -20,6 +21,7 @@ class RARFilesViewActivity : AppCompatActivity() {
     lateinit var list:ArrayList<TotalFilesModel>
     var temp:ArrayList<TotalFilesModel> = ArrayList()
     lateinit var adapter: SearchDocumentAdapter
+    @SuppressLint("NotifyDataSetChanged")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_rarfiles_view)
