@@ -44,7 +44,6 @@ class ZipUnZipActivity : AppCompatActivity() {
 
         Utils.searchViewTextClearSearchIconsColor(binding.searchView, this, R.color.white)
         Utils.setSearchViewHintColor(this, binding.searchView, R.color.hint_edt_color)
-        binding.searchView.requestFocus()
 
         lifecycleScope.launch{
             joinAll()

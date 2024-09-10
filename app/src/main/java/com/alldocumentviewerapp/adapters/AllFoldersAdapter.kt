@@ -41,7 +41,6 @@ class AllFoldersAdapter(var list: ArrayList<AllFolders>, var context: Context) :
             intent.putParcelableArrayListExtra("allFiles",data.fileModel)
             context.startActivity(intent)
 
-
         }
     }
 

@@ -10,7 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/main_app_color"
+        android:background="@color/black"
         tools:context=".ui.activities.ReadOnlinePdfActivity">
 
         <androidx.appcompat.widget.Toolbar
@@ -58,6 +58,8 @@
             app:boxStrokeColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:endIconMode="clear_text"
+            app:hintTextColor="@color/white"
+            android:textColorHint="@color/white"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toolBAR">
 
@@ -66,6 +68,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="Enter or paste URL"
+                android:textColor="@color/white"
                 android:textColorHint="@color/white" />
         </com.google.android.material.textfield.TextInputLayout>
 

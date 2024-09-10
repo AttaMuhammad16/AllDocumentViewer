@@ -1,18 +1,10 @@
 package com.alldocumentviewerapp.ui.activities
 
-import android.R.attr.path
 import android.annotation.SuppressLint
-import android.content.Intent
-import android.graphics.Bitmap
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
-import android.webkit.WebResourceError
-import android.webkit.WebResourceRequest
-import android.webkit.WebView
-import android.webkit.WebViewClient
 import android.widget.Button
 import android.widget.EditText
 import android.widget.PopupMenu
@@ -21,7 +13,6 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import com.ahmadullahpk.alldocumentreader.activity.All_Document_Reader_Activity
 import com.alldocumentviewerapp.R
 import com.alldocumentviewerapp.databinding.ActivityAllDocumentsViewBinding
 import com.alldocumentviewerapp.models.TotalFilesModel
@@ -39,7 +30,6 @@ import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.io.File
-import java.net.URLEncoder
 
 
 @AndroidEntryPoint

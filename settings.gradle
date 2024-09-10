@@ -22,4 +22,4 @@ rootProject.name = "All Document Viewer"
 include ':app'
 
 
-
+include ':documents-reader-lib'

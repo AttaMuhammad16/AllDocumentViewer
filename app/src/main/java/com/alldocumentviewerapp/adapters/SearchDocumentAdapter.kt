@@ -1,6 +1,5 @@
 package com.alldocumentviewerapp.adapters
 
-import android.R.attr.path
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -29,7 +28,6 @@ import com.alldocumentviewerapp.utils.Utils.shareFileWithOthers
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.io.File
 

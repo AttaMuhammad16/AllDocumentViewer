@@ -15,8 +15,6 @@ import com.alldocumentviewerapp.R
 import com.alldocumentviewerapp.models.CacheDirModel
 import com.alldocumentviewerapp.models.TotalFilesModel
 import com.alldocumentviewerapp.ui.activities.AllDocumentsViewActivity
-import com.alldocumentviewerapp.ui.activities.UnRarActivity
-import com.alldocumentviewerapp.ui.activities.UnZipActivity
 import com.alldocumentviewerapp.ui.activities.rtffiles.ShowRTFFiles
 import com.alldocumentviewerapp.utils.Utils
 import com.alldocumentviewerapp.utils.Utils.getFileExtension
@@ -55,7 +53,7 @@ class RecentFilesAdapter(var list: List<CacheDirModel>, var context: Context) : 
         holder.date.text=date
         holder.fileSize.text=fileSize
         holder.drop_down_arrow.setOnClickListener {
-            Utils.rippleEffect(context, it)
+            rippleEffect(context, it)
         }
 
         val fileExtension = getFileExtension(data.fileName)
