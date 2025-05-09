@@ -356,8 +356,8 @@ class MainActivity : AppCompatActivity() {
         binding.refresh.setOnClickListener {
             binding.pd.visibility=View.VISIBLE
             rippleEff(it)
-            lifecycleScope.launch(Dispatchers.IO) {
-                var list = readAllDocxViewModel.getAllDocx(this@MainActivity)
+            lifecycleScope.launch(Dispatchers.Main) {
+                val list = readAllDocxViewModel.getAllDocx(this@MainActivity)
                 countFiles(list)
                 withContext(Dispatchers.Main){
                     binding.pd.visibility=View.GONE
@@ -370,7 +370,7 @@ class MainActivity : AppCompatActivity() {
             // For Android 11 and above
             if (Environment.isExternalStorageManager()) {
                 showViews()
-                lifecycleScope.launch(Dispatchers.IO) {
+                lifecycleScope.launch(Dispatchers.Main) {
                     var list = readAllDocxViewModel.getAllDocx(this@MainActivity)
                     Log.i("mobile", "onResume:mobil is 11 or above")
                     countFiles(list)
@@ -382,7 +382,7 @@ class MainActivity : AppCompatActivity() {
 
             if (legacyReadPermissionGranted) {
                 showViews()
-                lifecycleScope.launch(Dispatchers.IO) {
+                lifecycleScope.launch(Dispatchers.Main) {
                     var list = readAllDocxViewModel.getAllDocx(this@MainActivity)
                     countFiles(list)
                 }
