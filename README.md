@@ -50,7 +50,6 @@ I'm currently open to **freelance** and **remote job opportunities**!
 
 ## 📸 Screenshots
 
-<details>
   <summary><strong>📸 Screenshots</strong></summary>
 
   <p align="center">
@@ -61,8 +60,6 @@ I'm currently open to **freelance** and **remote job opportunities**!
     <img src="https://github.com/user-attachments/assets/3421cfa1-63ba-4214-97fa-a841a5a9a438" width="30%" alt="screen_5">
     <img src="https://github.com/user-attachments/assets/67ba13ad-74a5-4734-bfdb-4e7629eb5882" width="30%" alt="screen_6">
   </p>
-  
-</details>
 
 
 ---
